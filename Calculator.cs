@@ -3,39 +3,46 @@ namespace BasicCalculator
     public class Calculator
     {
         // First user number with public getter and setter
-        private double first;
+        private double first = 0;
         public double First
         {
-            get { return first; }
-            set { first = value; }
+            get => first;
+            set => first = value;
         }
         
         // Second user number with public getter and setter
-        private double second;
+        private double second = 0;
         public double Second
         {
-            get { return second; }
-            set { second = value; }
+            get => second;
+            set => second = value;
         }
 
-        // Integer to store user's selected operation
-        private int selectedOp;
+        // Store user's selected operation
+        private OperationType selectedOp;
+        // Store operation types
+        public readonly Dictionary<OperationType, Operation?> operations;
 
-        // Dictionary to store operation types
-        public readonly Dictionary<int, Operation?> operations;
+        private History history;
+
+        // Create an instance of the History class and dictionary of operations
         public Calculator()
         {
-            operations = new Dictionary<int, Operation?>
+            history = new History();
+            operations = new Dictionary<OperationType, Operation?>
             {
-                { 1, new Addition() },
-                { 2, new Subtraction() },
-                { 3, new Multiplication() },
-                { 4, new Division() },
-                { 5, null }
+                { OperationType.Addition, new Addition() },
+                { OperationType.Subtraction, new Subtraction() },
+                { OperationType.Multiplication, new Multiplication() },
+                { OperationType.Division, new Division() },
+                { OperationType.Exponential, new Exponential() },
+                { OperationType.SquareRoot, new SquareRoot() },
+                { OperationType.History, null },
+                { OperationType.Exit, null }
             };
         }
 
-        public int GetOperation()
+        public OperationType GetOperation()
         {
             while (true)
             {
@@ -44,22 +51,25 @@ namespace BasicCalculator
                 Console.WriteLine("2. Subtraction");
                 Console.WriteLine("3. Multiplication");
                 Console.WriteLine("4. Division");
-                Console.WriteLine("5. Exit application");
+                Console.WriteLine("5. Exponential");
+                Console.WriteLine("6. Square root");
+                Console.WriteLine("7. Show history");
+                Console.WriteLine("8. Exit application");
 
                 // Prompt user for which operation to use
                 Console.Write("Enter the number of the operation you wish to use: ");
                 string? input = Console.ReadLine();
-                // Try to convert input to integer and check if number is for a valid operation
+                // Try to convert input to integer and check if number is a valid operation type
                 if (int.TryParse(input, out int operation) &&
-                    operations.ContainsKey(operation))
+                    Enum.IsDefined(typeof(OperationType), operation))
                 {
-                    // Set input as selected operation and return number
-                    selectedOp = operation;
+                    // Set input as selected operation and return operation type
+                    selectedOp = (OperationType)operation;
                     return selectedOp;
                 }
                 // If input is not a valid operation number, repeat loop
                 else
-                    Console.WriteLine("Input is not a valid operation number, please try again.");
+                    Console.WriteLine("Input is not a valid operation type, please try again.");
             }
         }
 
@@ -84,13 +94,31 @@ namespace BasicCalculator
         {
             try
             {
-                // Execute user-selected operation and return result as string
-                double result = operations[selectedOp]!.Execute(first, second);
-                return result.ToString();
+                // Show history and return empty string
+                if (selectedOp == OperationType.History)
+                {
+                    history.ShowHistory();
+                    return "";
+                }
+
+                // Execute user-selected operation and obtain result
+                Operation operation = operations[selectedOp]!;
+                double result = operation.Execute(first, second);
+
+                // Format string, different format required for square root
+                string calculation;
+                if (operation is SquareRoot)
+                    calculation = $"{operation.Symbol}{first} = {result}";
+                else
+                    calculation = $"{first}{operation.Symbol}{second} = {result}";
+
+                // Add entry to history and return it
+                history.AddHistory(calculation);
+                return calculation;
             }
-            catch (DivideByZeroException e)
+            catch (Exception e)
             {
-                // If divide by zero exception occurs, print error message and return empty string
+                // If mathematic exception occurs, print error message and return empty string
                 Console.WriteLine(e.Message);
                 return "";
             }

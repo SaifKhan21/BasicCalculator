@@ -7,14 +7,20 @@
             // Welcoming message
             Console.WriteLine("Welcome to the Basic Calculator program!");
             Console.WriteLine("You can use this to perform simple calculations.");
+            Calculator calculator = new Calculator();
 
             while (true)
             {
-                Calculator calculator = new Calculator();
                 // Get operation that user wishes to use
-                int operation = calculator.GetOperation();
-                // Exit program if they have chosen to stop using it
-                if (calculator.operations[operation] == null)
+                OperationType operation = calculator.GetOperation();
+                // Execute calculator code to show history and skip the rest of the loop
+                if (operation == OperationType.History)
+                {
+                    calculator.Execute();
+                    continue;
+                }
+                // Exit program if they have chosen to exit
+                else if (operation == OperationType.Exit)
                 {
                     Console.WriteLine("Thank you for using the Basic Calculator! Goodbye.\n");
                     break;
@@ -22,7 +28,10 @@
 
                 // Get input numbers from user
                 calculator.First = calculator.GetNumber("Enter your first number: ");
-                calculator.Second = calculator.GetNumber("Enter your second number: ");
+                // Skip second number if the selected operation is square root
+                if (operation != OperationType.SquareRoot)
+                    calculator.Second = calculator.GetNumber("Enter your second number: ");
+                
                 // Execute operation and print out result
                 Console.WriteLine(calculator.Execute());
             }
