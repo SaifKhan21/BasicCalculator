@@ -13,8 +13,8 @@
             {
                 // Get operation that user wishes to use
                 OperationType operation = calculator.GetOperation();
-                // Execute calculator code to show history and skip the rest of the loop
-                if (operation == OperationType.History)
+                // Execute calculator code to show history or do testing and skip rest of the loop
+                if (operation == OperationType.History || operation == OperationType.Test)
                 {
                     calculator.Execute();
                     continue;

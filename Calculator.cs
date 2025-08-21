@@ -2,28 +2,41 @@ namespace BasicCalculator
 {
     public class Calculator
     {
-        // First user number with public getter and setter
-        private double first = 0;
-        public double First
+        // Store first user number with public getter and setter
+        private decimal first = 0;
+        public decimal First
         {
             get => first;
             set => first = value;
         }
-        
-        // Second user number with public getter and setter
-        private double second = 0;
-        public double Second
+        // Store second user number with public getter and setter
+        private decimal second = 0;
+        public decimal Second
         {
             get => second;
             set => second = value;
         }
-
-        // Store user's selected operation
+        // Store result with public getter
+        private decimal result = 0;
+        public decimal Result
+        {
+            get => result;
+        }
+        // Store user's selected operation with public setter
         private OperationType selectedOp;
+        public OperationType SelectedOp
+        {
+            set => selectedOp = value;
+        }
+        // History instance with public getter
+        private History history;
+        public History History
+        {
+            get => history;
+        }
+
         // Store operation types
         public readonly Dictionary<OperationType, Operation?> operations;
-
-        private History history;
 
         // Create an instance of the History class and dictionary of operations
         public Calculator()
@@ -38,6 +51,7 @@ namespace BasicCalculator
                 { OperationType.Exponential, new Exponential() },
                 { OperationType.SquareRoot, new SquareRoot() },
                 { OperationType.History, null },
+                { OperationType.Test, null },
                 { OperationType.Exit, null }
             };
         }
@@ -54,7 +68,8 @@ namespace BasicCalculator
                 Console.WriteLine("5. Exponential");
                 Console.WriteLine("6. Square root");
                 Console.WriteLine("7. Show history");
-                Console.WriteLine("8. Exit application");
+                Console.WriteLine("8. Conduct tests");
+                Console.WriteLine("9. Exit application");
 
                 // Prompt user for which operation to use
                 Console.Write("Enter the number of the operation you wish to use: ");
@@ -73,7 +88,7 @@ namespace BasicCalculator
             }
         }
 
-        public double GetNumber(string prompt)
+        public decimal GetNumber(string prompt)
         {
             while (true)
             {
@@ -81,8 +96,8 @@ namespace BasicCalculator
                 Console.Write(prompt);
                 string? input = Console.ReadLine();
 
-                // Try to convert input to double and return it
-                if (double.TryParse(input, out double number))
+                // Try to convert input to decimal and return it
+                if (decimal.TryParse(input, out decimal number))
                     return number;
                 // If input is not a valid number, repeat loop
                 else
@@ -94,16 +109,22 @@ namespace BasicCalculator
         {
             try
             {
-                // Show history and return empty string
+                // Show history of calculations
                 if (selectedOp == OperationType.History)
                 {
                     history.ShowHistory();
                     return "";
                 }
+                // Run unit tests
+                if (selectedOp == OperationType.Test)
+                {
+                    new CalculatorTest();
+                    return "";
+                }
 
                 // Execute user-selected operation and obtain result
                 Operation operation = operations[selectedOp]!;
-                double result = operation.Execute(first, second);
+                result = operation.Execute(first, second);
 
                 // Format string, different format required for square root
                 string calculation;
@@ -118,9 +139,8 @@ namespace BasicCalculator
             }
             catch (Exception e)
             {
-                // If mathematic exception occurs, print error message and return empty string
-                Console.WriteLine(e.Message);
-                return "";
+                // If arithmetic exception occurs, return error message
+                return e.Message;
             }
         }
     }

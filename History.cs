@@ -4,6 +4,11 @@ namespace BasicCalculator
     {
         // Store history of calculations
         private readonly Queue<string> history = new Queue<string>();
+        // Public getter for history count
+        public int Count
+        {
+            get => history.Count;
+        }
 
         // Store only the last 10 calculation histories
         public void AddHistory(string entry)
