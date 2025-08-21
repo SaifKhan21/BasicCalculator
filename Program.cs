@@ -6,15 +6,26 @@
         {
             // Welcoming message
             Console.WriteLine("Welcome to the Basic Calculator program!");
-            Console.WriteLine("You can use this to perform simple calculations.\n");
+            Console.WriteLine("You can use this to perform simple calculations.");
 
-            Calculator calculator = new Calculator();
-            // Get input numbers from user and store the values
-            calculator.First = calculator.GetInput("Enter your first number: ");
-            calculator.Second = calculator.GetInput("Enter your second number: ");
+            while (true)
+            {
+                Calculator calculator = new Calculator();
+                // Get operation that user wishes to use
+                int operation = calculator.GetOperation();
+                // Exit program if they have chosen to stop using it
+                if (calculator.operations[operation] == null)
+                {
+                    Console.WriteLine("Thank you for using the Basic Calculator! Goodbye.\n");
+                    break;
+                }
 
-            // Print out sum of values
-            Console.WriteLine(calculator.Addition());
+                // Get input numbers from user
+                calculator.First = calculator.GetNumber("Enter your first number: ");
+                calculator.Second = calculator.GetNumber("Enter your second number: ");
+                // Execute operation and print out result
+                Console.WriteLine(calculator.Execute());
+            }
         }
     }
 }
