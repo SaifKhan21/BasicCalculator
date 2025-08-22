@@ -1,5 +1,6 @@
 namespace BasicCalculator
 {
+    // Enum of operations available to the user
     public enum OperationType
     {
         Addition = 1,

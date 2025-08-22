@@ -11,18 +11,24 @@ namespace BasicCalculator
         {
             calculator = new Calculator();
 
-            // Test operations and error handling
+            // Test operations with integers and decimals and error handling
             TestHistory(0);
+            TestAddition(25, 22, 47);
             TestAddition(7.2m, 5.6m, 12.8m);
+            TestSubtraction(67, 9, 58);
             TestSubtraction(7.2m, 5.6m, 1.6m);
-            TestMultiplication(5.2m, 2, 10.4m);
-            TestDivision(19, 8, 2.375m);
+            TestMultiplication(82, 4, 328);
+            TestMultiplication(5.2m, 2.33m, 12.116m);
+            TestDivision(408, 8, 51);
+            TestDivision(244, 7, (decimal)(244.0 / 7));
             TestExponential(7, 3, 343);
+            TestExponential(23, 3.2m, (decimal)Math.Pow(23, 3.2));
             TestSquareRoot(25, 5);
-            TestLetterInputs("asdf\n");
+            TestSquareRoot(20, (decimal)Math.Sqrt(20));
+            TestLetterInputs("asdf");
             TestZeroDivision(19);
             TestNegativeSquareRoot(-10);
-            TestHistory(6);
+            TestHistory(10);
 
             Console.WriteLine($"Tests passed: {testsPassed}");
             Console.WriteLine($"Tests failed: {testsFailed}");
@@ -151,9 +157,9 @@ namespace BasicCalculator
         // Test if letters in both operation and number inputs are handled correctly
         void TestLetterInputs(string input)
         {
-            Console.WriteLine($"TEST: Enter letters into operation and number inputs");
+            Console.WriteLine($"TEST: Enter letters (\"{input}\") into operation and number inputs");
             // Second line of input so that program is not stuck in function loop
-            input += "3\n";
+            input += "\n3\n";
 
             // Record the original console reader and writer
             TextReader originalReader = Console.In;
