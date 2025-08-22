@@ -24,21 +24,21 @@ namespace BasicCalculator
     // Add both numbers together
     public class Addition : Operation
     {
-        public override decimal Execute(decimal first, decimal second) => (decimal)((double)first + (double)second);
+        public override decimal Execute(decimal first, decimal second) => first + second;
         public override string Symbol => " + ";
     }
 
     // Subtract numbers with each other
     public class Subtraction : Operation
     {
-        public override decimal Execute(decimal first, decimal second) => (decimal)((double)first - (double)second);
+        public override decimal Execute(decimal first, decimal second) => first - second;
         public override string Symbol => " - ";
     }
 
     // Multiply both numbers together
     public class Multiplication : Operation
     {
-        public override decimal Execute(decimal first, decimal second) => (decimal)((double)first * (double)second);
+        public override decimal Execute(decimal first, decimal second) => first * second;
         public override string Symbol => " * ";
     }
 
@@ -49,7 +49,7 @@ namespace BasicCalculator
         {
             if (second == 0)
                 throw new DivideByZeroException("Division failed, cannot divide by zero.");
-            return (decimal)((double)first / (double)second);
+            return first / second;
         }
         public override string Symbol => " / ";
     }

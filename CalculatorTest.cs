@@ -20,7 +20,7 @@ namespace BasicCalculator
             TestMultiplication(82, 4, 328);
             TestMultiplication(5.2m, 2.33m, 12.116m);
             TestDivision(408, 8, 51);
-            TestDivision(244, 7, (decimal)(244.0 / 7));
+            TestDivision(244, 7, 244m / 7);
             TestExponential(7, 3, 343);
             TestExponential(23, 3.2m, (decimal)Math.Pow(23, 3.2));
             TestSquareRoot(25, 5);
