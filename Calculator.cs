@@ -2,38 +2,17 @@ namespace BasicCalculator
 {
     public class Calculator
     {
-        // Store first user number with public getter and setter
-        private decimal first = 0;
-        public decimal First
-        {
-            get => first;
-            set => first = value;
-        }
-        // Store second user number with public getter and setter
-        private decimal second = 0;
-        public decimal Second
-        {
-            get => second;
-            set => second = value;
-        }
-        // Store result with public getter
-        private decimal result = 0;
-        public decimal Result
-        {
-            get => result;
-        }
-        // Store user's selected operation with public setter
-        private OperationType selectedOp;
-        public OperationType SelectedOp
-        {
-            set => selectedOp = value;
-        }
+        // Store first and second user number with public getters and setters
+        public decimal first { get; set; } = 0;
+        public decimal second { get; set; } = 0;
+
+        // Store result with public getter and private setter
+        public decimal result { get; private set; } = 0;
+
+        // Store user's selected operation with private getter and public setter
+        public OperationType selectedOp { private get; set; }
         // History instance with public getter
-        private History history;
-        public History History
-        {
-            get => history;
-        }
+        public History history { get; }
 
         // Store operation types
         public readonly Dictionary<OperationType, Operation?> operations;

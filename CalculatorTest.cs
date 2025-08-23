@@ -86,72 +86,72 @@ namespace BasicCalculator
         // Test for history length count
         void TestHistory(int expected)
         {
-            AssertEqual(expected, calculator.History.Count, "History Count");
+            AssertEqual(expected, calculator.history.Count, "History Count");
         }
 
         // Test if addition operation functions correctly
         void TestAddition(decimal first, decimal second, decimal expected)
         {
             Console.WriteLine($"TEST: {first} + {second}");
-            calculator.First = first;
-            calculator.Second = second;
-            calculator.SelectedOp = OperationType.Addition;
+            calculator.first = first;
+            calculator.second = second;
+            calculator.selectedOp = OperationType.Addition;
             calculator.Execute();
-            AssertEqual(expected, calculator.Result, "Addition");
+            AssertEqual(expected, calculator.result, "Addition");
         }
 
         // Test if subtraction operation functions correctly
         void TestSubtraction(decimal first, decimal second, decimal expected)
         {
             Console.WriteLine($"TEST: {first} - {second}");
-            calculator.First = first;
-            calculator.Second = second;
-            calculator.SelectedOp = OperationType.Subtraction;
+            calculator.first = first;
+            calculator.second = second;
+            calculator.selectedOp = OperationType.Subtraction;
             calculator.Execute();
-            AssertEqual(expected, calculator.Result, "Subtraction");
+            AssertEqual(expected, calculator.result, "Subtraction");
         }
 
         // Test if multiplication operation functions correctly
         void TestMultiplication(decimal first, decimal second, decimal expected)
         {
             Console.WriteLine($"TEST: {first} * {second}");
-            calculator.First = first;
-            calculator.Second = second;
-            calculator.SelectedOp = OperationType.Multiplication;
+            calculator.first = first;
+            calculator.second = second;
+            calculator.selectedOp = OperationType.Multiplication;
             calculator.Execute();
-            AssertEqual(expected, calculator.Result, "Multiplication");
+            AssertEqual(expected, calculator.result, "Multiplication");
         }
 
         // Test if division operation functions correctly
         void TestDivision(decimal first, decimal second, decimal expected)
         {
             Console.WriteLine($"TEST: {first} / {second}");
-            calculator.First = first;
-            calculator.Second = second;
-            calculator.SelectedOp = OperationType.Division;
+            calculator.first = first;
+            calculator.second = second;
+            calculator.selectedOp = OperationType.Division;
             calculator.Execute();
-            AssertEqual(expected, calculator.Result, "Division");
+            AssertEqual(expected, calculator.result, "Division");
         }
 
         // Test if exponential operation functions correctly
         void TestExponential(decimal first, decimal second, decimal expected)
         {
             Console.WriteLine($"TEST: {first}^{second}");
-            calculator.First = first;
-            calculator.Second = second;
-            calculator.SelectedOp = OperationType.Exponential;
+            calculator.first = first;
+            calculator.second = second;
+            calculator.selectedOp = OperationType.Exponential;
             calculator.Execute();
-            AssertEqual(expected, calculator.Result, "Exponential");
+            AssertEqual(expected, calculator.result, "Exponential");
         }
 
         // Test if square root operation functions correctly
         void TestSquareRoot(decimal first, decimal expected)
         {
             Console.WriteLine($"TEST: √{first}");
-            calculator.First = first;
-            calculator.SelectedOp = OperationType.SquareRoot;
+            calculator.first = first;
+            calculator.selectedOp = OperationType.SquareRoot;
             calculator.Execute();
-            AssertEqual(expected, calculator.Result, "Square Root");
+            AssertEqual(expected, calculator.result, "Square Root");
         }
 
         // Test if letters in both operation and number inputs are handled correctly
@@ -195,9 +195,9 @@ namespace BasicCalculator
         void TestZeroDivision(decimal first)
         {
             Console.WriteLine($"TEST: {first} / 0");
-            calculator.First = first;
-            calculator.Second = 0;
-            calculator.SelectedOp = OperationType.Division;
+            calculator.first = first;
+            calculator.second = 0;
+            calculator.selectedOp = OperationType.Division;
             string result = calculator.Execute();
             // Check if calculation execution function returns error message
             AssertStringEqual("Division failed, cannot divide by zero.", result, "Divide By Zero");
@@ -207,8 +207,8 @@ namespace BasicCalculator
         void TestNegativeSquareRoot(decimal input)
         {
             Console.WriteLine($"TEST: √{input}");
-            calculator.First = input;
-            calculator.SelectedOp = OperationType.SquareRoot;
+            calculator.first = input;
+            calculator.selectedOp = OperationType.SquareRoot;
             string result = calculator.Execute();
             // Check if calculation execution function returns error message
             AssertStringEqual("Square root failed, cannot square root a negative number.", result, "Negative Square Root");

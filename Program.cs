@@ -27,10 +27,10 @@
                 }
 
                 // Get input numbers from user
-                calculator.First = calculator.GetNumber("Enter your first number: ");
+                calculator.first = calculator.GetNumber("Enter your first number: ");
                 // Skip second number if the selected operation is square root
                 if (operation != OperationType.SquareRoot)
-                    calculator.Second = calculator.GetNumber("Enter your second number: ");
+                    calculator.second = calculator.GetNumber("Enter your second number: ");
                 
                 // Execute operation and print out result
                 Console.WriteLine(calculator.Execute());
